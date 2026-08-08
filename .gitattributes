@@ -21,3 +21,6 @@ game_universe/static/css/owl.carousell.min.css linguist-vendored
 game_universe/static/css/slick-theme.css linguist-vendored
 game_universe/static/css/slick.css linguist-vendored
 game_universe/static/css/slicknavv.min.css linguist-vendored
+
+game_universe/static/js/mainn.js linguist-vendored
+game_universe/static/js/playerr.js linguist-vendored
