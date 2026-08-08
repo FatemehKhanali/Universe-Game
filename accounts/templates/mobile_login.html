@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Game_universe - Login{% endblock title %}
+{% block content %}
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .stars-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite ease-in-out;
+    opacity: 0.8;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  .login-container {
+    position: relative;
+    z-index: 1;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+    color: #ffffff;
+  }
+
+  .login-container h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #00bcd4;
+  }
+
+  .login-container label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .login-container input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  .login-container input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00bcd4;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .login-container input[type="submit"]:hover {
+    background-color: #0097a7;
+  }
+</style>
+
+<div class="stars-container" id="stars"></div>
+
+<div class="login-container">
+  <h1>Mobile Login</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="mobile">Phone Number:</label>
+    <input type="text" name="mobile" id="mobile" placeholder=" 09121234567" />
+    <input type="submit" value="Send">
+  </form>
+</div>
+
+<script>
+  const starCount = 120;
+  const starsContainer = document.getElementById('stars');
+
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDelay = `${Math.random() * 3}s`;
+    star.style.opacity = Math.random();
+    starsContainer.appendChild(star);
+  }
+</script>
+
+{% endblock content %}

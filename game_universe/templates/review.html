@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} {{game.title}} {% endblock title %}
+{% block content %}
+
+ <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    {% if game.video %}
+        <video width="1000" height="480" controls>
+            <source src="{{ game.video.url }}" type="video/mp4">
+            مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
+        </video>
+    {% else %}
+        <p>ویدیویی برای نمایش وجود ندارد.</p>
+    {% endif %}
+</div>
+    
+{% endblock content %}

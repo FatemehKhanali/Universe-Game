@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Successful Payment</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; background: #f0f8ff; }
+        .success-box { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        .success-icon { font-size: 64px; margin-bottom: 20px; }
+        h1 { color: #00d4aa; margin-bottom: 20px; }
+
+
+    /* Notification styles */
+    .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: none;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    .download-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px dashed #28a745;
+    }
+
+    .download-btn {
+        background: #28a745;
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 8px;
+        display: inline-block;
+        margin: 10px;
+        transition: all 0.3s;
+    }
+
+    .download-btn:hover {
+        background: #218838;
+        transform: scale(1.05);
+    }
+
+    .download-progress {
+        display: none;
+        margin: 15px 0;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 20px;
+        background: #e9ecef;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: #28a745;
+        width: 0%;
+        transition: width 0.3s;
+    }
+</style>
+</head>
+<div class="success-box">
+    <div class="success-icon">✅</div>
+    <h1>Payment Successful!</h1>
+    <p>Order Number: <strong>{{ order.id }}</strong></p>
+    <p>Amount: <strong>{{ order.total_price }}</strong> Toman</p>
+    <p>Reference Number: <strong>{{ ref_id }}</strong></p>
+
+    <!-- Download Section -->
+    <div class="download-section">
+        <h3>🎮 Purchased Games</h3>
+        <p>The following games are ready for download:</p>
+
+        {% for order_game in order.ordergame_set.all %}
+            <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                <strong>{{ order_game.game.title }}</strong>
+                <br>
+                <small>Quantity: {{ order_game.quantity }}</small>
+                <br>
+                <a href="{% url 'download_game' order_game.id %}"
+                   class="download-btn"
+                   onclick="startDownload(this, '{{ order_game.game.title }}')">
+                    📥 Download {{ order_game.game.title }}
+                </a>
+            </div>
+        {% endfor %}
+
+        <!-- Progress Bar -->
+        <div class="download-progress" id="progress-section">
+            <p id="download-status">Downloading...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="/"
+       style="background: #00d4aa; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; margin-top: 20px;"
+       onclick="showNotification()">
+        Return to Home Page
+    </a>
+</div>
+
+<script>
+    function showNotification() {
+        const notification = document.getElementById('notification');
+        notification.style.display = 'block';
+
+        // Hide after 5 seconds
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 5000);
+    }
+
+    function startDownload(button, gameName) {
+        // Show progress
+        const progressSection = document.getElementById('progress-section');
+        const progressFill = document.getElementById('progress-fill');
+        const status = document.getElementById('download-status');
+
+        progressSection.style.display = 'block';
+        status.textContent = `Downloading ${gameName}...`;
+
+        // Simulate download progress
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                status.textContent = `✅ ${gameName} download completed!`;
+                button.textContent = '✅ Downloaded';
+                button.style.background = '#6c757d';
+                button.onclick = null;
+            }
+            progressFill.style.width = progress + '%';
+        }, 200);
+    }
+
+    // Auto show notification after 2 seconds
+    setTimeout(() => {
+        showNotification();
+    }, 2000);
+</script>
+</body>
+</html>

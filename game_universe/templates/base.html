@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>{% block title %}{% endblock title %}</title>
+    <a href="{% url 'index' %}">
+        <link rel="icon" href="{% static 'img/logo_game.png ' %}" type="image/png">
+    </a>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/slick.css ' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css ' %}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css ' %}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css ' %}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    {% block styles %}
+<!-- Styles -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  #chat-icon {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #111;
+    color: #0ff;
+    font-size: 26px;
+    padding: 12px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 8px #0ff6;
+    z-index: 1000;
+    transition: transform 0.2s;
+  }
+
+  #chat-icon:hover {
+    transform: scale(1.1);
+  }
+
+  #chat-box {
+    position: fixed;
+    bottom: 90px;
+    right: 25px;
+    width: 360px;
+    height: 520px;
+    display: none;
+    flex-direction: column;
+    background-color: #0a0a0a;
+    border: 1px solid #0ff2;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 12px #0ff4;
+    z-index: 1000;
+  }
+
+  .chat-header {
+    padding: 12px;
+    background-color: #111;
+    color: #0ff;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #0ff2;
+  }
+
+  .chat-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: radial-gradient(circle, rgba(0,255,255,0.04) 1px, transparent 1px),
+                radial-gradient(circle, rgba(0,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+  }
+
+  .chat-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px;
+    border-top: 1px solid #0ff2;
+    background-color: #111;
+    justify-content: center;
+  }
+
+  .question {
+    background-color: #111;
+    color: #0ff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #0ff3;
+    transition: background 0.3s;
+  }
+
+  .question:hover {
+    background-color: #0ff1;
+    color: #000;
+  }
+
+  .message {
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 80%;
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+
+  .user-message {
+    background-color: #0ff2;
+    color: #000;
+    align-self: flex-start;
+  }
+
+  .bot-message {
+    background-color: #222;
+    color: #0ff;
+    align-self: flex-end;
+    border: 1px solid #0ff3;
+  }
+
+  .typing {
+    border-right: 2px solid #0ff;
+    animation: blink 0.8s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    0% { border-color: transparent; }
+    50% { border-color: #0ff; }
+    100% { border-color: transparent; }
+  }
+</style>
+
+
+
+
+    {% endblock styles%}
+</head>
+
+
+<body>
+<!--
+		<button id="startButton"></button>
+		<div id="preloader">
+			<video autoplay playsinline id="introVideo">
+			  <source src="{% static 'img/fire.mp4 ' %}" type="video/mp4">
+			</video>
+		  </div>
+
+-->
+<!-- HEADER -->
+<header>
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+
+            <ul class="header-links pull-right">
+                 {% if user.is_authenticated %}
+                     <li><a href="{% url 'accounts:edit_profile' %}"><i class="fa fa-user"></i> Hello, {{ user.username }}</a></li>
+                     <li><a href="{% url 'accounts:logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                 {% else %}
+                     <li><a href="{% url 'accounts:login' %}"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li><a href="{% url 'accounts:register' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+                 {% endif %}
+            </ul>
+
+
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="#" class="logo">
+                            <img src="{% static './img/logo_game.png ' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        <form method="get" action="{% url 'search' %}">
+    <select class="input-select" name="category">
+        <option value="0">All</option>
+        <option value="action">Action</option>
+        <option value="strategy">Strategy</option>
+        <option value="puzzle">Puzzle & Mystery</option>
+        <option value="multiplayer">Multiplayer</option>
+        <option value="hot">Hot & New</option>
+    </select>
+    <input class="input" name="q" placeholder="Search here" required>
+    <button type="submit" class="search-btn">Search</button>
+</form>
+
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <!-- Wishlist -->
+                        <!-- Wishlist Section -->
+<div class="wishlist-container">
+    <a href="#" class="wishlist-toggle">
+        <i class="fa fa-heart-o"></i>
+        <span>Your Wishlist</span>
+        <div class="qty">2</div>
+    </a>
+    <div class="wishlist-dropdown">
+        <div class="wishlist-list">
+            <!-- Game 1 -->
+            <div class="product-widget">
+                <div class="product-img">
+                    <img src="{% static './img/hot&new2.jpg' %}" alt="Game One">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name"><a href="#">Resident Evil 4</a></h3>
+                </div>
+            </div>
+            <!-- Game 2 -->
+            <div class="product-widget">
+                <div class="product-img">
+                    <img src="{% static './img/assassin creed chronicles_action.jpg' %}" alt="Game Two">
+                </div>
+                <div class="product-body">
+                    <h3 class="product-name"><a href="#">assassin creed chronicles_action</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.wishlist-container {
+    position: relative;
+    display: inline-block;
+    font-family: sans-serif;
+}
+
+.wishlist-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.wishlist-toggle i {
+    font-size: 18px;
+}
+
+.wishlist-toggle .qty {
+    background-color: crimson;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.wishlist-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+    padding: 10px;
+    z-index: 999;
+}
+
+.wishlist-container:hover .wishlist-dropdown {
+    display: block;
+}
+
+.product-widget {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.product-img img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.product-body .product-name {
+    font-size: 14px;
+    margin: 0;
+}
+
+.product-body .product-name a {
+    color: #333;
+    text-decoration: none;
+}
+
+.product-body .product-name a:hover {
+    text-decoration: underline;
+}
+</style>
+
+
+                        <!-- /Wishlist -->
+
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                                <div class="qty">{{ cart.cart_length }}</div>
+                            </a>
+                            <div class="cart-dropdown">
+                                <div class="cart-list">
+                                    {% for item in cart %}
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src="{{ item.game.image.url }}" alt="{{ item.game.title }}">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="{{ item.game.get_absolute_url }}">{{ item.game.title }}</a></h3>
+                                            <h4 class="product-price"><span class="qty">{{ item.quantity }}</span>{{ item.game.price }}</h4>
+                                        </div>
+                                        <a class="delet" href="{% url 'remove_from_cart' item.game.id %}"><i class="fa fa-close"></i></a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="cart-summary">
+                                    <small>{{ cart.cart_length }} Item(s) selected</small>
+                                    <h5>SUBTOTAL: {{ cart.all_total_price }}</h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'cart_detail' %}">View Cart</a>
+                                    <a href="{% url 'checkout' %}">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Cart -->
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->
+
+<!-- NAVIGATION -->
+<nav id="navigation" style="background-color:#01031ae3;">
+    <!-- container -->
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav">
+                <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'action' %}">Action </a></li>
+                <li><a href="{% url 'strategy' %}">Strategy </a></li>
+                <li><a href="{% url 'persian' %}">Persian </a></li>
+                <li><a href="{% url 'puzzle' %}">Puzzle & Mystery</a></li>
+                <li><a href="{% url 'multi' %}">Multiplayer</a></li>
+                <li><a href="{% url 'new' %}">Hot & New</a></li>
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+</nav>
+<!-- /NAVIGATION -->
+
+
+{% block content %}{% endblock content %}
+
+
+<!-- NEWSLETTER -->
+<div id="newsletter" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="newsletter">
+                    <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+                    <form>
+                        <input class="input" type="email" placeholder="Enter Your Email">
+                        <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+                    </form>
+                    <ul class="newsletter-follow">
+
+                        <li>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /NEWSLETTER -->
+
+<!-- FOOTER -->
+<footer id="footer">
+    <!-- top footer -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">About Us</h3>
+                        <p>Welcome to Game_Universe <br>
+                            your go to hub for the latest games, honest reviews, and great deals.<br>
+                            We’re here to level up your gaming experience, one click at a time</p>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fa fa-envelope-o"></i>fatemehkhanali1775@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Categories</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Strategy</a></li>
+                            <li><a href="#">Puzzle</a></li>
+                            <li><a href="#">Persian</a></li>
+                            <li><a href="#">Multiplayer</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="clearfix visible-xs"></div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Information</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-6">
+                    <div class="footer">
+                        <h3 class="footer-title">Service</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">View Cart</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="#">Help</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /top footer -->
+
+    <!-- bottom footer -->
+    <div id="bottom-footer" class="section">
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <ul class="footer-payments">
+                        <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+                        <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+                        <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /bottom footer -->
+</footer>
+<!-- /FOOTER -->
+
+<!-- Chat Icon -->
+<div id="chat-icon">💬</div>
+
+<!-- Chat Box -->
+<div id="chat-box">
+  <div class="chat-header">Game_Universe Assistant</div>
+
+  <!-- Chat messages -->
+  <div class="chat-body" id="chat-body"></div>
+
+  <!-- Question buttons -->
+  <div class="chat-questions">
+    <div class="question" onclick="sendQuestion(this)">🎮 Recommend games by age group?</div>
+    <div class="question" onclick="sendQuestion(this)">🛒 How can I purchase a game?</div>
+    <div class="question" onclick="sendQuestion(this)">🌟 Why Game_Universe?</div>
+    <div class="question" onclick="sendQuestion(this)">🌐 Do you have online games?</div>
+  </div>
+</div>
+<!-- Audio -->
+<audio id="message-sound" src="{% static './sounds/message-sent.mp3' %}" preload="auto"></audio>
+
+
+<!-- jQuery Plugins -->
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+<script src="{% static 'js/nouislider.min.js' %}"></script>
+<script src="{% static 'js/jquery.zoom.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/scroll.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+{% block scripts %}
+<script>
+  const chatIcon = document.getElementById('chat-icon');
+  const chatBox = document.getElementById('chat-box');
+  const chatBody = document.getElementById('chat-body');
+  const sound = document.getElementById('message-sound');
+
+  chatIcon.addEventListener('click', () => {
+    chatBox.style.display = (chatBox.style.display === 'flex') ? 'none' : 'flex';
+  });
+
+  function sendQuestion(el) {
+    const question = el.innerText;
+    const answer = getAnswer(question);
+
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.innerText = question;
+    chatBody.appendChild(userMessage);
+
+    const botMessage = document.createElement('div');
+    botMessage.className = 'message bot-message typing';
+    botMessage.innerText = "";
+    chatBody.appendChild(botMessage);
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    typeText(botMessage, answer, () => {
+      botMessage.classList.remove("typing");
+      sound.play(); // play sound after typing
+    });
+  }
+
+  function typeText(element, text, callback) {
+    let i = 0;
+    const speed = 25;
+
+    function typeChar() {
+      if (i < text.length) {
+        element.innerText += text.charAt(i);
+        i++;
+        chatBody.scrollTop = chatBody.scrollHeight;
+        setTimeout(typeChar, speed);
+      } else {
+        if (callback) callback();
+      }
+    }
+
+    typeChar();
+  }
+
+  function getAnswer(question) {
+  switch (question) {
+    case "🎮 Recommend games by age group?":
+      return `Sure! 👇
+- Kids (Under 12): Sticky Party, Block Prince
+- Teens (13–17): Star Wars: Outlaws, Aragami, Hitman Series
+- Adults (18+): Resident Evil 4 Remake, Warhammer III, Crusader Kings III`;
+
+    case "🛒 How can I purchase a game?":
+      return `To purchase, please login or create an account.
+Once logged in, simply add your favorite games to the cart and proceed to checkout. 🎮💳`;
+
+    case "🌟 Why Game_Universe?":
+      return `Because we bring you the hottest and most up-to-date titles,
+excellent pricing, and a gamer-first experience.
+We're not just a store — we're your gaming ally! 🕹️✨`;
+
+    case "🌐 Do you have online games?":
+      return `Yes! To see the latest online games, visit the Online Games page. 🌍🔥`;
+
+    default:
+      return "Hmm, I don't have an answer for that... yet!";
+  }
+}
+</script>
+
+
+
+{% endblock scripts %}
+
+</body>
+</html>

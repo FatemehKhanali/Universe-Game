@@ -1,0 +1,345 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url("../img/resident-back.jpg") center/cover no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 600px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.left-section {
+    flex: 1;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
+                url("../img/lady-character.jpg") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+
+.character-text {
+    position: absolute;
+    bottom: 100px;
+    right: 50px;
+    color: #fff;
+    font-size: 120px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    opacity: 0.7;
+    transform: rotate(-5deg);
+}
+
+.game-subtitle {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.right-section {
+    flex: 1;
+    background: rgba(20, 20, 20, 0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 50px;
+    backdrop-filter: blur(10px);
+}
+
+.logo-container {
+    margin-bottom: 50px;
+}
+
+.logo {
+    width: 80px;
+    height: 60px;
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: linear-gradient(45deg, #ff8c42, #ffa500);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.login-form {
+    width: 100%;
+    max-width: 300px;
+}
+
+.django-form p {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.django-form label {
+    display: none;
+}
+
+.django-form input[type="text"],
+.django-form input[type="password"],
+.django-form input[type="email"] {
+    width: 100%;
+    padding: 18px 20px;
+    background: rgba(30, 30, 30, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.django-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+}
+
+.django-form input:focus {
+    border-color: #ff6b35;
+    background: rgba(40, 40, 40, 0.9);
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+    transform: translateY(-2px);
+}
+
+.django-form .errorlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.django-form .errorlist li {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid #ff6b6b;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(45deg, #dc3545, #c82333);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 25px 0;
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+.submit-btn:hover {
+    background: linear-gradient(45deg, #c82333, #a71e2a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.5);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.link-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.link-row a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.link-row a:hover {
+    color: #ff6b35;
+    text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+}
+
+.remember-link.active {
+    color: #ff6b35;
+}
+
+.remember-link.active::before {
+    content: '✓ ';
+    font-weight: bold;
+}
+
+.brand-name {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    margin: 20px 0;
+    text-transform: lowercase;
+    text-align: center;
+}
+
+.signup-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    text-align: center;
+}
+
+.signup-text a {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+    color: #ff6b35;
+}
+
+.error-message {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #ff6b6b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.success-message {
+    background: rgba(40, 167, 69, 0.2);
+    border: 1px solid rgba(40, 167, 69, 0.5);
+    color: #28a745;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.submit-btn.loading {
+    background: #6c757d;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s ease infinite;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        height: auto;
+        max-height: 90vh;
+    }
+
+    .left-section {
+        min-height: 200px;
+    }
+
+    .character-text {
+        font-size: 60px;
+        right: 20px;
+        bottom: 60px;
+        letter-spacing: 5px;
+    }
+
+    .game-subtitle {
+        font-size: 16px;
+        right: 20px;
+        bottom: 30px;
+    }
+
+    .right-section {
+        padding: 40px 30px;
+    }
+
+    .submit-btn {
+        padding: 15px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 98%;
+        margin: 10px;
+    }
+
+    .right-section {
+        padding: 30px 20px;
+    }
+
+    .login-form {
+        max-width: 100%;
+    }
+}

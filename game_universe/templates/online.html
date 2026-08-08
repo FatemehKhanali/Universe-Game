@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Anime Template">
+    <meta name="keywords" content="Anime, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Online Game</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrapo.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.minn.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-iconss.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/plyrr.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-selectt.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousell.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknavv.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/stylee.css' %}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+     <!-- Header Section Begin -->
+      <!-- Header Section Begin -->
+      <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static 'img/logo_text.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="{% url 'index' %}">Home</a></li>
+
+                                    <li class="has-dropdown">
+                                      <a href="#">Categories <span class="arrow_carrot-down"></span></a>
+                                      <ul class="dropdown">
+                                        <li><a href="{% url 'action' %}">Action</a></li>
+                                        <li><a href="{% url 'strategy' %}">Strategy</a></li>
+                                        <li><a href="{% url 'persian' %}">Persian</a></li>
+                                        <li><a href="{% url 'puzzle' %}">Puzzle & Mystery</a></li>
+                                        <li><a href="{% url 'multi' %}">Multiplayer</a></li>
+                                      </ul>
+                                    </li>
+
+
+                                <li><a href="#">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="header__right">
+                        <a href="#" id="profileIcon">
+                          <span class="icon_profile"></span>
+                        </a>
+                        <ul class="dropdown" id="profileMenu">
+                          <li><a href="#">Sing Up</a></li>
+                          <li><a href="#">Login</a></li>
+                        </ul>
+                      </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Normal Breadcrumb Begin -->
+    <section class="normal-breadcrumb set-bg" data-setbg="{% static 'img/normal-breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text">
+                        <h2>Online Games</h2>
+                        <p>Welcome to the world of online games.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Normal Breadcrumb End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="blog__item set-bg" data-setbg="{% static 'img/pic/IdleActionRPG_1.jpg' %}">
+                                <div class="blog__item__text">
+                                    <h4 class="game-title" >
+                                        <a href="https://www.crazygames.com/game/afk-dungeon-zaq"style="color:goldenrod"> <span class="icon_calendar" style="color: crimson;"></span> AFK Dungeon:Idle Action RPG</a>
+                                      </h4>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/bloxdhop-io">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/Bloxd.io.png' %}">
+                                <div class="blog__item__text">
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/solar-smash#">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/planet.jpg' %}">
+                                <div class="blog__item__text">
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <a href="https://www.crazygames.com/game/rally-racer-dirt">
+                            <div class="blog__item set-bg" data-setbg="{% static 'img/pic/rally-racer-dirt_16x9-cover.avif' %}">
+                                <div class="blog__item__text">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/count-masters-stickman-games">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/sticmangames.jpg' %}">
+                                <div class="blog__item__text">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/caveman-life">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/caveman-life.avif' %}">
+                                <div class="blog__item__text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/sky-riders-buk">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/SkyRiders.jpg' %}">
+                                <div class="blog__item__text">
+                               </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/supermarket-simulator-cashier-game">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/supermarket.avif' %}">
+                                <div class="blog__item__text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <a href="https://www.crazygames.com/game/firestone-idle-rpg">
+                            <div class="blog__item set-bg" data-setbg="{% static 'img/pic/FirestoneIdleRPG.jpg' %}">
+                                <div class="blog__item__text">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/doodle-road">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/doodle.png' %}">
+                                <div class="blog__item__text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <a href="https://www.crazygames.com/game/immortal-dark-slayer">
+                            <div class="blog__item small__item set-bg" data-setbg="{% static 'img/pic/DarkSlayer.png' %}">
+                                <div class="blog__item__text">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <a href="https://www.crazygames.com/game/battle-arena">
+                            <div class="blog__item set-bg" data-setbg="{% static 'img/pic/BattleArena.png' %}">
+                                <div class="blog__item__text">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+    <!-- Blog Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer__logo">
+                        <a href="{% url 'index' %}"><img src="{% static 'img/logo_text.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="footer__nav">
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                        <br>
+                        <ul class="footer-links">
+                            <li><a href="#"><p style="color: darksalmon;"> <i class="fa fa-envelope-o"></i> fatemehkhanali1775@gmail.com</p></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h3 class="footer-title" style="color: crimson;">About Us</h3>
+                    <p> Welcome to Game_Universe <br>
+                        your go to hub	for the latest games, honest reviews, and great deals.<br>
+                        We’re here to level up your gaming experience, one click at a time</p>
+
+                  </div>
+              </div>
+          </div>
+      </footer>
+      <!-- Footer Section End -->
+
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jqueryy-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrapp.min.js' %}"></script>
+    <script src="{% static 'js/playerr.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.minn.js' %}"></script>
+    <script src="{% static 'js/mixitup.minn.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknavv.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.minn.js' %}"></script>
+    <script src="{% static 'js/mainn.js' %}"></script>
+
+
+    <script>
+        const icon = document.getElementById("profileIcon");
+        const menu = document.getElementById("profileMenu");
+      
+        icon.addEventListener("click", function (e) {
+          e.preventDefault();
+          menu.style.display = menu.style.display === "block" ? "none" : "block";
+        });
+        document.addEventListener("click", function (e) {
+          if (!icon.contains(e.target) && !menu.contains(e.target)) {
+            menu.style.display = "none";
+          }
+        });
+      </script>
+      
+</body>
+
+</html>

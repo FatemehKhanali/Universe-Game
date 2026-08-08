@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarinpal payment gateway</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .payment-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #00d4aa;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-info {
+            padding: 30px;
+        }
+
+        .merchant-info {
+            background: #f8f9fc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-right: 4px solid #00d4aa;
+        }
+
+        .merchant-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .order-id {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .amount-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .amount-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+
+        .amount-label {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .amount-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .amount-currency {
+            font-size: 14px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .description {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #6c757d;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .payment-methods {
+            margin: 25px 0;
+        }
+
+        .method-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .method-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .method-option:hover {
+            border-color: #00d4aa;
+            box-shadow: 0 5px 15px rgba(0, 212, 170, 0.15);
+        }
+
+        .method-option.selected {
+            border-color: #00d4aa;
+            background: #f0fdfa;
+        }
+
+        .method-icon {
+            width: 40px;
+            height: 40px;
+            background: #f8f9fc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            font-size: 20px;
+        }
+
+        .method-info h4 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+
+        .method-info p {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-cancel {
+            background: #f8f9fc;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-cancel:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-pay {
+            background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+        }
+
+        .security-info {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fc;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .badge {
+            background: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+            font-size: 11px;
+            color: #495057;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00d4aa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="header">
+            <div class="logo">💳 Zarinpal</div>
+            <div class="subtitle">Online Payment Gateway</div>
+        </div>
+
+        <div class="payment-info" id="payment-form">
+            <div class="merchant-info">
+                <div class="merchant-name">{{ merchant_name }}</div>
+                <div class="order-id">Order ID: {{ order.id }}</div>
+            </div>
+
+            <div class="amount-section">
+                <div class="amount-label">Amount Payable</div>
+                <div class="amount-value">{{ amount|floatformat:0 }}</div>
+                <div class="amount-currency">$</div>
+            </div>
+
+            <div class="description">
+                {{ description }}
+            </div>
+
+            <div class="payment-methods">
+                <div class="method-title">Payment Method</div>
+
+                <div class="method-option selected" onclick="selectMethod(this)">
+                    <div class="method-icon">💳</div>
+                    <div class="method-info">
+                        <h4>Bank Card</h4>
+                        <p>Payment via all Shetab-enabled cards</p>
+                    </div>
+                </div>
+
+                <div class="method-option" onclick="selectMethod(this)">
+                    <div class="method-icon">📱</div>
+                    <div class="method-info">
+                        <h4>Zarinpal Wallet</h4>
+                        <p>Fast and easy payment</p>
+                    </div>
+                </div>
+
+                <div class="method-option" onclick="selectMethod(this)">
+                    <div class="method-icon">🏦</div>
+                    <div class="method-info">
+                        <h4>Internet Banking</h4>
+                        <p>Direct transfer from your bank account</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="/checkout/" class="btn btn-cancel">
+                    ← Cancel
+                </a>
+                <button type="button" class="btn btn-pay" onclick="processPayment()">
+                    Pay →
+                </button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Connecting to the bank...</div>
+        </div>
+
+        <div class="security-info">
+            🔒 Your information is protected with the highest security standards
+            <div class="security-badges">
+                <span class="badge">🛡️ SSL</span>
+                <span class="badge">✅ Verified</span>
+                <span class="badge">🔐 Secure</span>
+            </div>
+        </div>
+    </div>
+
+    <form id="payment-form-submit" method="post" action="{% url 'simulate_payment' %}" style="display: none;">
+        {% csrf_token %}
+        <input type="hidden" name="order_id" value="{{ order.id }}">
+        <input type="hidden" name="action" value="" id="payment-action">
+    </form>
+
+    <script>
+        function selectMethod(element) {
+            // Remove selected class from all methods
+            document.querySelectorAll('.method-option').forEach(opt => opt.classList.remove('selected'));
+            // Add selected class to clicked method
+            element.classList.add('selected');
+        }
+
+        function processPayment() {
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            // Simulate processing time
+            setTimeout(() => {
+                document.getElementById('payment-action').value = 'success';
+                document.getElementById('payment-form-submit').submit();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+

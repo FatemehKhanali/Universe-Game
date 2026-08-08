@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Cart{% endblock title %}
+{% block styles %}
+<style>
+    h1 {
+        text-align: center;
+        color: #ECF0F1;
+        margin: 20px 0;
+    }
+
+    table {
+        width: 90%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: rgba(0, 18, 39, 0.9);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: center;
+        color: white;
+        border-bottom: 1px solid #34495E;
+    }
+
+    th {
+        background-color: rgb(0, 151, 252);
+    }
+
+    td img {
+        border-radius: 5px;
+    }
+
+    table a, a.shopping, a.shop {
+        text-decoration: underline;
+        color: #ECF0F1;
+        transition: color 0.3s;
+    }
+
+    table a:hover {
+        color: #3498DB;
+    }
+
+    .add-to-cart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .input-number {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .input-number input[type="number"] {
+        color: black;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        width: 75px;
+        text-align: center;
+    }
+
+    .add-to-cart-btn {
+        background-color: #27AE60;
+        color: white;
+        border: none;
+        padding: 12px 12px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #219653;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .primary-btn.order-submit, .shopping {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 0 10px;
+        transition: background-color 0.3s ease; /
+    }
+
+    .primary-btn.order-submit:hover, .shopping:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock styles %}
+{% block content %}
+<div class="container">
+    <h1>Cart Detail</h1>
+    {% if cart.cart_length == 0 %}
+      <p style="color:white;">----     Your cart is empty!!  ----</p>
+        <a href="{% url 'index' %}" class="shopping">Continue Shopping</a>
+    {% else %}
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Game Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Price</th>
+            <th>Remove</th>
+        </tr>
+        {% for item in cart %}
+            <tr>
+                <td><a href="#"><img src="{{ item.game.image.url }}" alt="{{ item.game.title }}" width="200" height="150"/></a></td>
+                <td><a href="{{ item.game.get_absolute_url }}">{{ item.game.title }}</a></td>
+                <td>
+                    <div class="add-to-cart">
+                        <form method="post" action="{% url 'add_to_cart' %}">
+                            <div class="input-number">
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                                <input type="hidden" name="game_id" value="{{ item.game.id }}">
+                                <input type="hidden" name="update" value="1">
+                                <span class="qty-up" style="color:red">+</span>
+                                <span class="qty-down" style="color:red">-</span>
+                            </div>
+
+                        </form>
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Update</button>
+                    </div>
+                </td>
+                <td>{{ item.game.price }}</td>
+                <td>{{ item.total_price }}</td>
+                <td><a href="{% url 'remove_from_cart' item.game.id %}">Remove</a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4"></td>
+             <td>Total Price</td>
+             <td>{{ cart.get_total_price }} </td>
+        </tr>
+    </table>
+
+    <div class="button-container">
+        <a href="{% url 'checkout' %}" class="shopping">Checkout</a>
+        <a href="{% url 'index' %}" class="shopping">Continue Shopping</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

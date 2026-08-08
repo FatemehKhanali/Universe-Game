@@ -1,0 +1,595 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Game_universe{% endblock title %}
+{% block content %}
+
+<div id="mainContent" style="display: none;">
+<!-- SECTION -->
+<div class="section" style="padding: 40px 0;">
+    <div class="container" style="position: relative;">
+
+
+        <button id="scrollLeftBtn" class="scroll-btn left">&#10094;</button>
+        <button id="scrollRightBtn" class="scroll-btn right">&#10095;</button>
+
+
+        <div id="gameScroll" class="scroll-container">
+
+            <!-- shop -->
+            <div class="shop">
+                <div class="shop-img">
+                    <a href="{% url 'action' %}">
+                        <img src="{% static 'img/action.jpg' %}" style="width: 300px; height: 350px;" alt="">
+                    </a>
+                </div>
+                <div class="shop-body">
+                    <h3>Action</h3>
+                    <a href="{% url 'action' %}" class="cta-btn">Play now <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <!-- shop -->
+            <div class="shop">
+                <div class="shop-img">
+                    <a href="{% url 'strategy' %}">
+                        <img src="{% static './img/strategy.jpg ' %}" style="width: 300px; height: 350px;" alt="">
+                    </a>
+                </div>
+                <div class="shop-body">
+                    <h3>Strategy</h3>
+                    <a href="{% url 'strategy' %}" class="cta-btn">Play now <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <!-- shop -->
+            <div class="shop">
+                <div class="shop-img">
+                    <a href="{% url 'persian' %}">
+                        <img src="{% static './img/persian.webp ' %}" style="width: 300px; height: 350px;" alt="">
+                    </a>
+                </div>
+                <div class="shop-body">
+                    <h3>Persian</h3>
+                    <a href="{% url 'persian' %}" class="cta-btn">Play now <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <!-- shop -->
+            <div class="shop">
+                <div class="shop-img">
+                    <a href="{% url 'puzzle' %}">
+                        <img src="{% static './img/alan.webp ' %}" style="width: 300px; height: 350px;" alt="">
+                    </a>
+                </div>
+                <div class="shop-body">
+                    <h4>Mystery</h4>
+                    <a href="{% url 'puzzle' %}" class="cta-btn">Play now <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- shop -->
+            <div class="shop">
+                <div class="shop-img">
+                    <a href="{% url 'multi' %}">
+                        <img src="{% static './img/multi.jpg ' %}" style="width: 300px; height: 350px;" alt="">
+                    </a>
+                </div>
+                <div class="shop-body">
+                    <h4>Multiplayer</h4>
+                    <a href="{% url 'multi' %}" class="cta-btn">Play now <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- shop -->
+            <div class="shop">
+                <div class="shop-img">
+
+                    <img src="{% static './img/Dragons-Dogma-2.webp  ' %}" style="width: 300px; height: 350px;" alt="">
+
+                </div>
+                <div class="shop-body">
+                    <h4>Hot & new</h4>
+                    <a href="{% url 'new' %}" class="cta-btn">Play now <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Banner-->
+<br><br>
+<div class="banner">
+    <div class="text">
+        <h3>Ready to Play? </h3>
+        <p>
+            One click is all it takes to jump into a world of nonstop action<br>
+            chill vibes, and epic battles.<br>
+            Whether you're here to crush the leaderboard or just have fun<br>
+            the game zone is always open. You in?
+        </p>
+
+    </div>
+    <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+
+    </svg>
+    <div class="images">
+        <img src="{% static 'img/online_game/Bloxd.io.png ' %}" alt="Bloxd.io"/>
+        <img src="{% static 'img/online_game/caveman-life.avif ' %}" alt="caveman-life"/>
+        <img src="{% static 'img/online_game/doodle.png ' %}" alt="doodle"/>
+
+        <div style="width: 100%; margin-top: 20px;">
+            <img src="{% static 'img/online_game/planet.jpg ' %}" alt="planet"/>
+            <img src="{% static 'img/online_game/rally-racer-dirt_16x9-cover.avif ' %}" alt="rally-racer-dirt"/>
+            <img src="{% static 'img/online_game/SkyRiders.jpg ' %}" alt="SkyRiders"/>
+        </div>
+        <a href="{% url 'online' %}" class="btn">Start Playing!</a>
+    </div>
+
+</div>
+<br><br><br>
+<!--banner-->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title" style="color: chartreuse;">Hot & new </h3>
+                </div>
+            </div>
+            <!-- /section title -->
+
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab1" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                {% for game in games %}
+                                <!-- product -->
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="{{game.image.url}}" style="width: 263px; height: 350px;" alt="">
+                                        <div class="product-label">
+                                            <span class="sale">-20%</span>
+                                            <!-- <span class="new">NEW</span>!-->
+                                        </div>
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category">Hot&New</p>
+                                        <h3 class="product-name"><a href="{% url 'detail' id=game.id %}">{{ game.title }}</a></h3>
+                                        <h4 class="product-price"> {{ game.price }}
+
+                                        </h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                    class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                    class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /product -->
+                                {% endfor %}
+                            </div>
+                            <div id="slick-nav-1" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+                    </div>
+                </div>
+            </div>
+            <!-- Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+<!-- HOT DEAL SECTION -->
+<div id="hot-deal" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hot-deal">
+                    <ul class="hot-deal-countdown">
+                        <li>
+                            <div>
+                                <h3>02</h3>
+                                <span>Days</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3>10</h3>
+                                <span>Hours</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3>34</h3>
+                                <span>Mins</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h3>60</h3>
+                                <span>Secs</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <h2 class="text-uppercase" style="color: rgb(236, 216, 1); box-shadow: 12px;">hot game for this
+                        week</h2>
+                    <p style="color: rgb(1, 8, 22)">New Collection Up to 50% OFF</p>
+                    <a class="primary-btn cta-btn" href="#">Shop now</a>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /HOT DEAL SECTION -->
+
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-4 col-xs-6">
+                <div class="section-title">
+                    <h4 class="title">Top selling</h4>
+                    <div class="section-nav">
+                        <div id="slick-nav-3" class="products-slick-nav"></div>
+                    </div>
+                </div>
+
+                <div class="products-widget-slick" data-nav="#slick-nav-3">
+                    <div>
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/assassin creed chronicles_action.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Action</p>
+                                <h3 class="product-name"><a href="#">Assassin creed chronicles</a></h3>
+                                <h4 class="product-price">$20
+                                    <del class="product-old-price">$90</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/2012call of duty modern warfare-multi.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Multiplayer</p>
+                                <h3 class="product-name"><a href="#">call of duty modern warfare</a></h3>
+                                <h4 class="product-price">$30
+                                    <del class="product-old-price">$60</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/age of emprise iv_strategy.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Strategy</p>
+                                <h3 class="product-name"><a href="#">Age of emprise iv</a></h3>
+                                <h4 class="product-price">$30
+                                    <del class="product-old-price">$60</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- product widget -->
+                    </div>
+
+                    <div>
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/hot&new2.jpg ' %}" style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Action</p>
+                                <h3 class="product-name"><a href="#">Resident Evil4</a></h3>
+                                <h4 class="product-price">$60
+                                    <del class="product-old-price">$70</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/8khan-persian.jpg ' %}" style="width: 50px; height: 50px;"
+                                     alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">persian</p>
+                                <h3 class="product-name"><a href="#">8khan</a></h3>
+                                <h4 class="product-price">$3
+                                    <del class="product-old-price">$5</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/Blue-Prince(hot&new6).jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Mystery</p>
+                                <h3 class="product-name"><a href="#">Blue-Prince</a></h3>
+                                <h4 class="product-price">$2
+                                    <del class="product-old-price">$5</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- product widget -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xs-6">
+                <div class="section-title">
+                    <h4 class="title">Top selling</h4>
+                    <div class="section-nav">
+                        <div id="slick-nav-4" class="products-slick-nav"></div>
+                    </div>
+                </div>
+
+                <div class="products-widget-slick" data-nav="#slick-nav-4">
+                    <div>
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/alan.webp ' %}" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Mystery</p>
+                                <h3 class="product-name"><a href="#">Alan Wake</a></h3>
+                                <h4 class="product-price">$30
+                                    <del class="product-old-price">$60</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/crusader kings3_strategy ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Strategy</p>
+                                <h3 class="product-name"><a href="#">crusader kings3</a></h3>
+                                <h4 class="product-price">$25
+                                    <del class="product-old-price">$50</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/Dishonored series_action.avif ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Action</p>
+                                <h3 class="product-name"><a href="#">Dishonored series</a></h3>
+                                <h4 class="product-price">$20
+                                    <del class="product-old-price">$40</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- product widget -->
+                    </div>
+
+                    <div>
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/artesh-persian.jpg ' %}" style="width: 50px; height: 50px;"
+                                     alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Persian</p>
+                                <h3 class="product-name"><a href="#">Artesh-Farazamini</a></h3>
+                                <h4 class="product-price">$20
+                                    <del class="product-old-price">$40</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/back4blood official-multi.jpg' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Multiplayer</p>
+                                <h3 class="product-name"><a href="#">back4blood official</a></h3>
+                                <h4 class="product-price">$30
+                                    <del class="product-old-price">$60</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/Company-of-Heroes-2-strategy.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Strategy</p>
+                                <h3 class="product-name"><a href="#">CompanyofHeroes-2</a></h3>
+                                <h4 class="product-price">$10
+                                    <del class="product-old-price">$20</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- product widget -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix visible-sm visible-xs"></div>
+
+            <div class="col-md-4 col-xs-6">
+                <div class="section-title">
+                    <h4 class="title">Top selling</h4>
+                    <div class="section-nav">
+                        <div id="slick-nav-5" class="products-slick-nav"></div>
+                    </div>
+                </div>
+
+                <div class="products-widget-slick" data-nav="#slick-nav-5">
+                    <div>
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/hot&new2.jpg ' %}" style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Action</p>
+                                <h3 class="product-name"><a href="#">Resident Evil4</a></h3>
+                                <h4 class="product-price">$60
+                                    <del class="product-old-price">$70</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/8khan-persian.jpg ' %}" style="width: 50px; height: 50px;"
+                                     alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">persian</p>
+                                <h3 class="product-name"><a href="#">8khan</a></h3>
+                                <h4 class="product-price">$3
+                                    <del class="product-old-price">$5</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/Blue-Prince(hot&new6).jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Mystery</p>
+                                <h3 class="product-name"><a href="#">Blue-Prince</a></h3>
+                                <h4 class="product-price">$2
+                                    <del class="product-old-price">$5</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- product widget -->
+                    </div>
+
+                    <div>
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/assassin creed chronicles_action.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Action</p>
+                                <h3 class="product-name"><a href="#">Assassin creed chronicles</a></h3>
+                                <h4 class="product-price">$20
+                                    <del class="product-old-price">$90</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/2012call of duty modern warfare-multi.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Multiplayer</p>
+                                <h3 class="product-name"><a href="#">call of duty modern warfare</a></h3>
+                                <h4 class="product-price">$30
+                                    <del class="product-old-price">$60</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- /product widget -->
+
+                        <!-- product widget -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                <img src="{% static './img/age of emprise iv_strategy.jpg ' %}"
+                                     style="width: 50px; height: 50px;" alt="">
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">Strategy</p>
+                                <h3 class="product-name"><a href="#">Age of emprise iv</a></h3>
+                                <h4 class="product-price">$30
+                                    <del class="product-old-price">$60</del>
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- product widget -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+</div>
+<!-- /SECTION -->
+{% endblock content %}
