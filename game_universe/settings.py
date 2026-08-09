@@ -3,6 +3,8 @@ Django settings for game_universe project.
 """
 import os
 
+import os
+from dotenv import load_dotenv
 
 os.environ['GDAL_LIBRARY_PATH'] = r'C:\Users\khanali\anaconda3\envs\my_project_env\Library\bin\gdal.dll'
 from pathlib import Path
@@ -11,7 +13,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-zg5u6j1x$8x+#t@i0fhie(m=8$%5z&j$6r*$a)1xsayl^jk#a1"
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
